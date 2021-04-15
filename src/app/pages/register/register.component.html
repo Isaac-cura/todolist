@@ -1,6 +1,6 @@
 <div class="container-fluid d-flex full-height flex-column">
     <div class="row flex-fill flex-column mb-2">
-        <div class="col full-height vertical-centered-container">
+        <div class="col full-height vertical-centered-container p-0">
             <div class="container-fluid">
                 <div class="row">
                     <div class="offset-sm-2 col-sm-8 offset-md-3 col-md-6">
@@ -33,9 +33,7 @@
                                     class="form-control">
                             </div>
                             <div class="d-none d-sm-block">
-                                <button 
-                                    type="button" 
-                                    class="btn btn-dark submit-register full-width">REGISTRAR</button>
+                                <ng-container *ngTemplateOutlet="submitButton"></ng-container>
                             </div>
                         </form>
                     </div>
@@ -44,10 +42,13 @@
         </div>
     </div>
     <div class="row d-sm-none">
-        <div class="offset-sm-2 col-sm-8 offset-md-3 col-md-6">
-            <button 
-                type="button" 
-                class="btn btn-dark submit-register full-width">REGISTRAR</button>
+        <div class="offset-sm-2 col-sm-8 offset-md-3 col-md-6 py-2">
+            <ng-container *ngTemplateOutlet="submitButton"></ng-container>
         </div>
     </div>
 </div>
+<ng-template #submitButton>
+    <button 
+        type="button" 
+        class="btn btn-dark submit-register full-width">REGISTRAR</button>
+</ng-template>

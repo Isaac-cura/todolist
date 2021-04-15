@@ -1,9 +1,9 @@
-<div class="container-fluid full-height">
-    <div class="row full-height">
-        <div class="col full-height vertical-centered-container">
+<div class="container-fluid full-height d-flex flex-column">
+    <div class="row flex-fill mb-2">
+        <div class="col full-height vertical-centered-container p-0">
             <div class="container-fluid">
                 <div class="row">
-                    <div class="offset-sm-3 col-sm-6">
+                    <div class="offset-sm-2 col-sm-8 offset-md-3 col-md-6">
                         <form [formGroup]="loginForm">
                             <div>
                                 <input 
@@ -19,11 +19,8 @@
                                     placeholder="Contraseña"
                                     class="form-control">
                             </div>
-                            <div>
-                                <button 
-                                    type="button" 
-                                    [disabled]="loginForm?.invalid"
-                                    class="btn btn-dark full-width">ENTRAR</button>
+                            <div class="d-none d-sm-block">
+                                <ng-container *ngTemplateOutlet="submitButton"></ng-container>
                             </div>
                             <p class="center">
                                 Puedes <a routerLink="../register">registrarte</a> si no tienes una cuenta    
@@ -34,4 +31,16 @@
             </div>
         </div>
     </div>
+    <div class="row d-sm-none">
+        <div class="offset-sm-2 col-sm-8 offset-md-3 col-md-6 py-2">
+            <ng-container *ngTemplateOutlet="submitButton"></ng-container>
+        </div>
+    </div>
 </div>
+
+<ng-template #submitButton>
+    <button 
+    type="button" 
+    [disabled]="loginForm?.invalid"
+    class="btn btn-dark full-width">ENTRAR</button>
+</ng-template>
