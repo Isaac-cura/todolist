@@ -10,8 +10,8 @@ import { AuthenticationService } from '../../services/authentication.service';
 export class AuthorizationComponent implements OnInit {
 
   loginForm: FormGroup = this.formBuilder.group({
-    email: ['', [Validators.required]],
-    password: ['', [Validators.required]]
+    email: ['', [Validators.required, Validators.email]],
+    password: ['', [Validators.required, Validators.minLength(7), Validators.pattern(/(?=.*[0-9])(?=.*[A-Z])/)]]
   });
 
   constructor(
@@ -21,5 +21,4 @@ export class AuthorizationComponent implements OnInit {
 
   ngOnInit(): void {
   }
-
 }

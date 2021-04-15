@@ -24,7 +24,9 @@ html {
 .center{
     text-align: center;
 }
-
+* {
+    outline: none;
+}
 a{
     cursor: pointer;
     color: var(--primary-color);
