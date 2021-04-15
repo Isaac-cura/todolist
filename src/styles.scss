@@ -2,3 +2,38 @@
 
 /* Importing Bootstrap SCSS file. */
 @import '~bootstrap/scss/bootstrap';
+
+
+:root{
+    --primary-color: #343a40;
+}
+html {
+    &,body{
+        height: 100%;
+        width: 100%;
+        overflow-x: hidden;
+        overflow-y: auto;
+    }
+}
+
+.full-height { 
+    min-height: 100%;
+    height: 100%;
+}
+
+.center{
+    text-align: center;
+}
+
+a{
+    cursor: pointer;
+    color: var(--primary-color);
+    font-weight: bold;
+}
+
+.vertical-centered-container{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
