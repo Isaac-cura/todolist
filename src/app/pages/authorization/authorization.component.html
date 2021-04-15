@@ -16,17 +16,17 @@
                                 <input 
                                     type="password" 
                                     formControlName="password"
-                                    placeholder="contraseña"
+                                    placeholder="Contraseña"
                                     class="form-control">
                             </div>
                             <div>
                                 <button 
                                     type="button" 
                                     [disabled]="loginForm?.invalid"
-                                    class="btn btn-dark submit-login">ENTRAR</button>
+                                    class="btn btn-dark full-width">ENTRAR</button>
                             </div>
                             <p class="center">
-                                Puedes <a>registrarte</a> si no tienes una cuenta    
+                                Puedes <a routerLink="../register">registrarte</a> si no tienes una cuenta    
                             </p>
                         </form>
                     </div>

@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { AuthenticationService } from '../../services/authentication.service';
 
 @Component({
   selector: 'app-authorization',
@@ -12,9 +13,10 @@ export class AuthorizationComponent implements OnInit {
     email: ['', [Validators.required]],
     password: ['', [Validators.required]]
   });
-  
+
   constructor(
-    private formBuilder: FormBuilder
+    private formBuilder: FormBuilder,
+    private authenticationService: AuthenticationService
   ) { }
 
   ngOnInit(): void {
