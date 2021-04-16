@@ -1,0 +1,9 @@
+<ngb-toast 
+    *ngFor="let toastData of toastsData" 
+    [ngClass]="toastData.class" 
+    [autohide]="false">
+    <i class="fa fa-checkmark"></i>
+    {{
+        toastData.message
+    }}
+</ngb-toast>

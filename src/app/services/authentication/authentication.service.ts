@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Observable, of, throwError } from 'rxjs';
-import { User } from '../models/user.model';
-import { LocalStorage } from '../enums/localstorage.enums';
+import { User } from '../../models/user.model';
+import { LocalStorage } from '../../enums/localstorage.enums';
 @Injectable({
   providedIn: 'root'
 })
