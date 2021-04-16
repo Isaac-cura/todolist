@@ -1,0 +1,72 @@
+.container-fluid{
+    margin-top: 32px;
+    .avatar{
+        width: 64px;
+        display: inline-block;
+        img{
+            width: 100%;
+            border-radius: 100%;
+        }
+    }
+    .route{
+        font-family: Montserrat;
+        font-style: normal;
+        font-weight: bold;
+        font-size: 24px;
+        line-height: 29px;
+        letter-spacing: 0.3px;
+        color: #27415D;
+        &>div{
+            width: 100%;
+        }
+    }
+    .action-group{
+        text-align: right;
+        white-space: nowrap;
+        &>div{
+            display: inline-block;
+        }
+    }
+    .notifications{
+        margin-left: 25px;
+        .badge{
+            position: absolute;
+            top:0px;
+            right: 0px;
+            background-color: rgba(55, 81, 255, 1);
+            border-radius: 100%;
+            color: white;
+            font-family: Montserrat;
+            font-style: normal;
+            font-size: 10px;
+        }
+    }
+    @media(max-width: 798px) {
+        .avatar{
+            max-width: 40px;
+        }
+        .route{
+            font-size: 14px;
+        }
+    }
+
+    .nickname{
+        font-family: Montserrat;
+        font-style: normal;
+        font-weight: 600;
+        font-size: 14px;
+        line-height: 20px;
+        letter-spacing: 0.2px;
+        display: inline-block;
+        margin-right: 16px;
+        vertical-align: middle;
+        max-width: 127px;
+        text-align: right;
+        text-overflow: ellipsis;
+        overflow: hidden;
+        padding-left: 27px;
+        margin-left: 12px;
+        border-left: 1px solid #c5c7cd;
+        white-space: nowrap;
+    }
+}

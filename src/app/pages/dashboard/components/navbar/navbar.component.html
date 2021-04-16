@@ -1,1 +1,28 @@
-<p>navbar works!</p>
+<div class="container-fluid">
+    <div class="row">
+        <div class="d-none d-sm-flex route vertical-centered-container">
+            <div>
+                <span>
+                    {{route}} 
+                </span>
+            </div>
+        </div>
+        <div class="col action-group p-0">
+            <div class="search d-none d-sm-inline-block">
+                <img src="assets/icons/search.png" alt="">
+            </div>
+            <div class="notifications relative">
+                <div class="badge" *ngIf="notificationQuantity">
+                    {{notificationQuantity}}
+                </div>
+                <img src="assets/icons/bell.png" alt="">
+            </div>
+            <div class="nickname">
+                {{user?.username}}
+            </div>
+            <div class="avatar">
+                <img src="assets/avatars/jose.png" alt="imagen de una persona">
+            </div>
+        </div>
+    </div>
+</div>

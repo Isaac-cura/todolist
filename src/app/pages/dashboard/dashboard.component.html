@@ -1,11 +1,14 @@
 <div class="container-fluid full-height">
-    <div class="row full-height">
+    <div class="row full-height grid-container p-0">
         <app-sidebar></app-sidebar>
-        <div class="col full-height">
+        <div class="col full-height p-0">
             <div class="container-fluid d-flex flex-column full-height">
                 <div class="row">
                     <div class="col">
-                        <app-navbar></app-navbar>
+                        <app-navbar 
+                            [notificationQuantity]="5"
+                            [user]="user$ | async" 
+                            [route]="route"></app-navbar>
                     </div>
                 </div>
                 <div class="row mb-2 flex-fill">
