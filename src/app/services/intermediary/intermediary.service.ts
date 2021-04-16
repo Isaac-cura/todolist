@@ -18,7 +18,7 @@ export class IntermediaryService {
   ) { 
   }
 
-  showConfirmation(message: string, title: string) {
+  showConfirmation(message: string, title?: string) {
     const modal = this.modalService.open(ConfirmationComponent);
     const confirmationComponent: ConfirmationComponent = modal.componentInstance;
     confirmationComponent.message = message;
@@ -27,15 +27,24 @@ export class IntermediaryService {
     }));
   }
 
-  pipedToast<T>(successMessage: string, errorMessage?: string) {
+  pipedToast<T>(
+    successMessage: IntermediaryModels.ToastMessage<T>, 
+    errorMessage?: IntermediaryModels.ToastMessage<any>) {
     return pipe(map((value:T) => {
-      this.showSuccedToast(successMessage);
+      this.showSuccedToast(
+        this.getToastMessage(successMessage, value)
+      );
       return value;
     }), catchError(error => {
-      errorMessage = errorMessage || typeof(error) == "string" ? error : '';
+      errorMessage = this.getToastMessage(errorMessage, error);
       errorMessage && this.showErrorToast(errorMessage);
       return throwError(error);
     }))
+  }
+  
+  private getToastMessage<T>(toastMessage: IntermediaryModels.ToastMessage<T>, value: T): string {
+    const type = typeof(toastMessage);
+    return type == "string" ? toastMessage : type == "function" ? (toastMessage as any)(value) : ""
   }
 
   showSuccedToast(message: string, header?: string) {

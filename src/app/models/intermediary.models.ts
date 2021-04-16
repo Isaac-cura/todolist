@@ -8,4 +8,6 @@ export namespace IntermediaryModels{
         duration?: number;
         class?: string;
     }
+
+    export type ToastMessage<T> = string | ((value:T) => string)
 }

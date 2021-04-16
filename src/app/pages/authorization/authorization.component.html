@@ -17,6 +17,7 @@
                                     type="password" 
                                     formControlName="password"
                                     placeholder="Contraseña (*)"
+                                    (keyup.enter)="loginForm?.valid && attemptLogin(loginForm?.value)"
                                     class="form-control shadow-none">
                             </div>
                             <div class="d-none d-sm-block">
@@ -40,6 +41,7 @@
 
 <ng-template #submitButton>
     <button 
+    (click)="attemptLogin(loginForm?.value)"
     type="button" 
     [disabled]="loginForm?.invalid"
     class="btn btn-dark full-width">ENTRAR</button>

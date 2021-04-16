@@ -1,10 +1,13 @@
 import { Injectable } from '@angular/core';
-import { Observable, of, ReplaySubject, Subject, throwError } from 'rxjs';
+import { Observable, of, pipe, ReplaySubject, Subject, Subscription, throwError } from 'rxjs';
 import { User } from '../../models/user.model';
 import { AuthenticationModels } from '../../models/authentication.models';
 import { LocalStorage } from '../../enums/localstorage.enums';
 import { UtilEnums } from '../../enums/util.enums';
 import { timer } from 'rxjs';
+import { IntermediaryService } from '../intermediary/intermediary.service';
+import { filter, first, takeUntil } from 'rxjs/operators';
+import { SubscriptionManagerService } from '../subscription-manager/subscription-manager.service';
 
 @Injectable({
   providedIn: 'root'
@@ -12,8 +15,30 @@ import { timer } from 'rxjs';
 export class AuthenticationService {
 
   autehnticationSubject: Subject<AuthenticationModels.Session> = new ReplaySubject();
+  private expirationSubscription: Subscription;
   
-  constructor() { 
+  constructor(
+    private intermediaryService: IntermediaryService,
+    /** Subscription manager service*/
+    private smService: SubscriptionManagerService
+  ) { 
+    this.launchFirstStateSession();
+  }
+
+  /**
+   * Ask for session the first time, when the application its being loading
+   * and dispatch the mechanism to refresh it
+   */
+  private launchFirstStateSession() {
+    const session = this.getActiveSession();
+    if(session) {
+      this.setSession(session, true);
+    }
+  }
+
+  private getActiveSession() {
+    const unparsedSession = localStorage.getItem(LocalStorage.SESSION);
+    return (unparsedSession ? JSON.parse(unparsedSession) : null) || null;
   }
 
   registerUser(user: User): Observable<User> {
@@ -39,20 +64,66 @@ export class AuthenticationService {
     return users.find(users => users.email == email && users.password == password);
   }
 
-  private setSession(user: User | AuthenticationModels.Session) {
+  /**
+   * @param preserveTime - preserve old start time for session
+   */
+  private setSession(obj: User | AuthenticationModels.Session, preserveTime: boolean = false) {
     const session: AuthenticationModels.Session = {
-      ...user,
-      start: new Date().getTime()
+      ...obj,
+      start: (preserveTime ? (obj as any).start : new Date().getTime())
     }
-    this.startExpirationLimit();
-    localStorage.setItem(LocalStorage.SESSION, JSON.stringify(user));
+    localStorage.setItem(LocalStorage.SESSION, JSON.stringify(session));
+    this.startExpirationLimit(session);
   }
 
-  private startExpirationLimit() {
-    const timeToExpire = UtilEnums.MillisecondTime.minute * 4;
-    timer(timeToExpire).subscribe(time => {
-      console.log("expira")
-    });
+  private startExpirationLimit(session: AuthenticationModels.Session) {
+    this.smService.addSubscription("expire-session", this.getExpirationTimer(session)
+    .subscribe((time) => {
+      this.askToExtendSession(session);
+    }, this.signOut.bind(this)))
+  }
+
+  private getExpirationTimer(session: AuthenticationModels.Session): Observable<number> {
+    const timeToExpire = this.getTimeToExpire(session);
+    if(!timeToExpire) {
+      return throwError("Sessión caduca");
+    }
+    return timer(timeToExpire).pipe(
+      takeUntil(
+        this.onSessionEnd()
+      )
+    )
+  }
+
+  private getTimeToExpire(session: AuthenticationModels.Session): number {
+    const timeToExpire = UtilEnums.MillisecondTime.minute / 4;
+    const expirationTimestamp = session.start + timeToExpire;
+    const currentTimestamp = new Date().getTime();
+    return expirationTimestamp > currentTimestamp ? 
+            expirationTimestamp - currentTimestamp :
+            0;
+  } 
+
+  private onSessionEnd() {
+    return this.autehnticationSubject.pipe(first(), filter(value => !value));
+  }
+
+  private askToExtendSession(session) {
+    this.intermediaryService.showConfirmation(
+      "Su sesión está por finalizar ¿Desea extenderla?"
+    ).pipe(
+      this.intermediaryService.pipedToast(
+      "Session extendida con éxito", 
+      "Su sessión expirará en 1 minuto"
+    )).subscribe(confirm => {
+      this.setSession(session)
+    },  this.launchSignOutTimer.bind(this))
+  }
+
+  private launchSignOutTimer() {
+    timer(UtilEnums.MillisecondTime.minute / 4).pipe(
+      takeUntil(this.onSessionEnd())
+    ).subscribe( _=>this.signOut());
   }
 
   private signOut() {
@@ -83,6 +154,7 @@ export class AuthenticationService {
   }
 
   private getUsers(): User[] {
-    return JSON.parse(localStorage.getItem("users")) || [];
+    const unparsedUsers = localStorage.getItem("users");
+    return (unparsedUsers ? JSON.parse(unparsedUsers) : []) || [];
   }
 }

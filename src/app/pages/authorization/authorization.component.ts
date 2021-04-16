@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
+import { RouterEnum } from 'src/app/enums/router.enum';
 import { IntermediaryService } from 'src/app/services/intermediary/intermediary.service';
 import { AuthenticationService } from '../../services/authentication/authentication.service';
 
@@ -16,9 +18,20 @@ export class AuthorizationComponent implements OnInit {
   });
 
   constructor(
-    private formBuilder: FormBuilder
+    private formBuilder: FormBuilder,
+    private authenticationService: AuthenticationService,
+    private intermediaryService: IntermediaryService,
+    private router: Router
   ) { }
 
   ngOnInit(): void {
+  }
+  
+  attemptLogin({email, password}) {
+    this.authenticationService.login(email, password).pipe(
+      this.intermediaryService.pipedToast((user) => `Bienvenido al sistema ${user.username}`, (error) => error)
+    ).subscribe(_ => {
+      this.router.navigateByUrl(RouterEnum.dashboard);
+    })
   }
 }
