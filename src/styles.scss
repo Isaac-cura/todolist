@@ -4,6 +4,7 @@
 @import '~bootstrap/scss/bootstrap';
 @import url('https://fonts.googleapis.com/css2?family=Montserrat&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Mulish&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@700&family=Mulish&display=swap');
 
 :root{
     --primary-color: #363740;
@@ -15,6 +16,10 @@ html {
         overflow-x: hidden;
         overflow-y: auto;
     }
+}
+
+img{
+    max-width: 100%;
 }
 
 .full-height { 

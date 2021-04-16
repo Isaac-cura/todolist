@@ -1,0 +1,29 @@
+:host{
+    height: 100%;
+    width: 100%;
+    *{
+        text-align: center;
+    }
+    img{
+        margin: auto;
+        max-width: calc(100% - 50px);
+    }
+    p{
+        font-family: Montserrat;
+        font-style: normal;
+        font-weight: normal;
+        font-size: 36px;
+        line-height: 44px;
+        text-align: center;
+        letter-spacing: 0.2px;
+        color: #27415D;
+        word-break: break-word;
+        white-space: pre-line;
+        @media(max-width: 572px) {
+            font-size: 25px;
+        }
+        span{
+            font-weight: 700;
+        }
+    }
+}

@@ -21,7 +21,8 @@ const routes: Routes = [{
     path: 'register', 
     loadChildren: () => import('./pages/register/register.module').then(m => m.RegisterModule),
     canActivate: [AuthenticationGuard]
-  }];
+  },
+];
 
 @NgModule({
   imports: [RouterModule.forRoot(routes)],
