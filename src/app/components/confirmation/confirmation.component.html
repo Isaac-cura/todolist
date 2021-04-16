@@ -1,0 +1,27 @@
+<div class="container-fluid d-flex flex-column full-height">
+    <div class="row py-2">
+        <div class="col title">
+            <span>
+                {{title || "confirmar"}}
+            </span>
+        </div>
+        <div class="mx-3 d-inline-block close-button" (click)="closeModal()">
+            <i class="fa fa-close"></i>
+        </div>
+    </div>
+    <div class="row mb2 flex-fill">
+        <div class="col-12 message vertical-centered-container">
+            <span>{{message}}</span>
+        </div>
+    </div>
+    <div class="row footer">
+        <div class="col-12 py-2">
+            <button class="btn btn-dark" (click)="closeModal(true)">
+                confirmar
+            </button>
+            <button class="btn btn-danger" (click)="closeModal()">
+                cancelar
+            </button>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,33 @@
+.container-fluid {
+    min-height: 200px;
+    *{
+        text-align: center;
+    }
+    div{
+        .title {
+            text-align: left;
+            font-size: 25px;
+            span{
+                font-weight: bold;
+            }
+        }
+        .close-button{
+            background-color: transparent;
+            i{
+                font-size: 20px;
+                color: var(--primary-color);
+            }
+        }
+    }
+    .footer {
+        button{
+            &.btn{
+                width: calc(50% - 30px);
+                &:nth-child(2) {
+                    margin-left: 15px;
+                }
+            }
+        }
+    }
+
+}
