@@ -2,7 +2,8 @@
     *ngFor="let toastData of toastsData" 
     [ngClass]="toastData.class" 
     [autohide]="false">
-    <i class="fa fa-checkmark"></i>
+    <i class="fa fa-check"></i>
+    <i class="fa fa-close"></i>
     {{
         toastData.message
     }}
