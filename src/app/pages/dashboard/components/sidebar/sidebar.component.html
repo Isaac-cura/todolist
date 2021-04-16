@@ -1,0 +1,38 @@
+<div class="full-height sidebar">
+    <div class="container-fluid d-flex full-height flex-column">
+        <div class="row header">
+            <div class="col">
+                <img class="logo-mi-aguila" src="assets/logo-mi-aguila.png" alt="logo de empresa mi águila">
+                <span class="d-none d-sm-inline">
+                    Mi Águila
+                </span>
+            </div>
+        </div>
+        <div class="row links flex-fill mb-2">
+            <div class="col-12">
+                <ul>
+                    <li class="active text-center text-sm-left">
+                        <img src="assets/icons/home.svg">
+                        <img class="active" src="assets/icons/active-home.svg">
+                        <span class="d-none d-sm-inline">
+                            Inicio
+                        </span>
+                    </li>
+                    <li *ngFor="let link of sidebarLinks" class="text-center text-sm-left">
+                        <img [src]="link.icon">
+                        <img class="active" [src]="link.activeIcon">
+                        <span class="d-none d-sm-inline">
+                            {{link.text}}
+                        </span>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <div class="row footer">
+            <div class="col text-center text-sm-left">
+                <img src="assets/icons/settings.png" alt="icono configuración">
+                <span class="d-none d-sm-inline">Configuración</span>
+            </div>
+        </div>
+    </div>
+</div>

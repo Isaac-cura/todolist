@@ -1,1 +1,17 @@
-<p>dashboard works!</p>
+<div class="container-fluid full-height">
+    <div class="row full-height">
+        <app-sidebar></app-sidebar>
+        <div class="col full-height">
+            <div class="container-fluid d-flex flex-column full-height">
+                <div class="row">
+                    <div class="col">
+                        <app-navbar></app-navbar>
+                    </div>
+                </div>
+                <div class="row mb-2 flex-fill">
+                    <router-outlet></router-outlet>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

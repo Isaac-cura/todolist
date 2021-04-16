@@ -4,8 +4,8 @@ import { UtilEnums } from './../app/enums/util.enums';
 
 export const environment: Environment = {
   production: false, 
-  timeToAskSession: UtilEnums.MillisecondTime.minute / 6,
-  timeToExpireSession: UtilEnums.MillisecondTime.minute / 6 + 15 
+  timeToAskSession: UtilEnums.MillisecondTime.minute * 4,
+  timeToExpireSession: UtilEnums.MillisecondTime.minute 
 };
 
 // This file can be replaced during build by using the `fileReplacements` array.

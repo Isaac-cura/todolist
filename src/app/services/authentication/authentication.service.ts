@@ -103,8 +103,7 @@ export class AuthenticationService {
   }
 
   private launchSignOutTimer(session:AuthenticationModels.Session) {
-    const timeToExpire = this.getTimeToExpire(session, "expire")
-    timer(timeToExpire).pipe(
+    timer(environment.timeToExpireSession).pipe(
       takeUntil(this.onSessionEnd())
     ).subscribe( _=>this.signOut());
   }
