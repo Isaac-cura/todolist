@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
-import { Observable } from 'rxjs';
+import { NavigationEnd, Router } from '@angular/router';
+import { Observable, Subscription } from 'rxjs';
+import { filter } from 'rxjs/operators';
 import { User } from 'src/app/models/user.model';
 import { AuthenticationService } from 'src/app/services/authentication/authentication.service';
 import { DasboardEnums } from '../../enums/dashboard.enum';
@@ -13,20 +14,35 @@ import { DasboardEnums } from '../../enums/dashboard.enum';
 export class DashboardComponent implements OnInit {
   user$: Observable<User>;
   route: string;
+  routerSubscription: Subscription;
   constructor(
     private authenticationService: AuthenticationService,
     private router: Router
   ) { 
-    this.route = this.getRouteName(this.router?.url);
-    console.log(this.route)
   }
 
   ngOnInit(): void {
     this.user$ = this.authenticationService.autehnticationSubject;
+    this.assignRoute();
+    this.initRouterListener();
+  }
+
+  private initRouterListener() {
+    this.routerSubscription = this.router.events.pipe(filter(event => event instanceof NavigationEnd)).subscribe(_=> {
+      this.assignRoute()
+    })
+  }
+
+  private assignRoute() {
+    this.route = this.getRouteName(this.router?.url);
   }
 
   private getRouteName(url: string){
     return DasboardEnums.RouteNames[url] || "";
+  }
+
+  ngOnDestroy() {
+    this.routerSubscription && this.routerSubscription.unsubscribe()
   }
 
   

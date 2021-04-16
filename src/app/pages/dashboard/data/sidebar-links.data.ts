@@ -8,7 +8,7 @@ export const sidebarLinks: SidebarLink[] = [{
 },{
     icon: 'assets/icons/crow.svg',
     activeIcon: 'assets/icons/active-crow.svg',
-    route: 'users',
+    route: 'usuarios',
     text: 'Usuarios'
 },{
     icon: 'assets/icons/task.svg',

@@ -1,0 +1,24 @@
+<div class="container-fluid d-flex full-height">
+    <div class="row full-width">
+        <div class="col">
+            <table class="table table-striped">
+                <thead>
+                <tr>
+                  <th *ngFor="let userHeader of userHeaders" scope="col">
+                      {{userHeader}}
+                  </th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr *ngFor="let user of userInformation; index as i">
+                  <td *ngFor="let data of user">
+                    {{
+                        data
+                    }}
+                  </td>
+                </tr>
+                </tbody>
+              </table>
+        </div>
+    </div>
+</div>

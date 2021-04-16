@@ -1,0 +1,8 @@
+{
+  "/v1/fdc94f84-fc0b-4bff-94c1-c95a4c1d43f2": {
+    "target": "https://mocki.io",
+    "secure": false,
+    "changeOrigin": true,
+    "logLevel": "debug"
+  }
+}

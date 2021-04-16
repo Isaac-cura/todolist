@@ -12,3 +12,11 @@ export interface DTOUser{
     email: string;
     status: boolean;
 }
+
+export interface UserDatasource{
+    id: number;
+    name: string;
+    "teléfono": string;
+    email: string;
+    estado: boolean;
+}
