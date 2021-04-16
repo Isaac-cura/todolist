@@ -52,5 +52,6 @@
     <button 
         type="button" 
         [disabled]="registerForm?.invalid"
+        (click)="registerUser(registerForm?.value)"
         class="btn btn-dark submit-register full-width">REGISTRAR</button>
 </ng-template>

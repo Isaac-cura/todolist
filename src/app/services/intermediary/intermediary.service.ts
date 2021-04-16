@@ -14,12 +14,13 @@ export class IntermediaryService {
   constructor() { 
   }
 
-  pipedToast<T>(successMessage: string, errorMessage: string) {
+  pipedToast<T>(successMessage: string, errorMessage?: string) {
     return pipe(map((value:T) => {
       this.showSuccedToast(successMessage);
       return value;
     }), catchError(error => {
-      this.showErrorToast(errorMessage);
+      errorMessage = errorMessage || typeof(error) == "string" ? error : '';
+      errorMessage && this.showErrorToast(errorMessage);
       return throwError(error);
     }))
   }
