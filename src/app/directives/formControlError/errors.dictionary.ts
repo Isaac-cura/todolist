@@ -10,5 +10,6 @@ export const ErrorDictionary = {
             null
         ].filter(message => !!message).join("/n");
     },
-    required:() => 'Este campo es requerido'
+    required:() => 'Este campo es requerido',
+    passwordNotMatch: () => "Las contraseñas no coinciden"
 }

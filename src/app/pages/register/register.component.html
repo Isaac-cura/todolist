@@ -4,10 +4,11 @@
             <div class="container-fluid">
                 <div class="row">
                     <div class="offset-sm-2 col-sm-8 offset-md-3 col-md-6">
-                        <form>
+                        <form [formGroup]="registerForm">
                             <div>
                                 <input 
                                     placeholder="Nombre de Usuario"
+                                    formControlName="username"
                                     type="text" 
                                     class="form-control">
                             </div>
@@ -28,7 +29,7 @@
                             <div>
                                 <input 
                                     type="password" 
-                                    formControlName="password"
+                                    formControlName="repeatedPassword"
                                     placeholder="Repetir Contraseña"
                                     class="form-control">
                             </div>
@@ -50,5 +51,6 @@
 <ng-template #submitButton>
     <button 
         type="button" 
+        [disabled]="registerForm?.invalid"
         class="btn btn-dark submit-register full-width">REGISTRAR</button>
 </ng-template>
