@@ -13,6 +13,6 @@ export const sidebarLinks: SidebarLink[] = [{
 },{
     icon: 'assets/icons/task.svg',
     activeIcon: 'assets/icons/active-task.svg',
-    route: 'tasks',
+    route: 'tareas',
     text: 'Tareas'
 }]
