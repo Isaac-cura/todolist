@@ -6,7 +6,7 @@
                 <div class="row">
                     <div class="col">
                         <app-navbar 
-                            [notificationQuantity]="5"
+                            [notificationQuantity]="taskQuantity$ | async"
                             [user]="user$ | async" 
                             [route]="route"></app-navbar>
                     </div>

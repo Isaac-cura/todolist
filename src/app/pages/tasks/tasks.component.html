@@ -1,1 +1,57 @@
-<p>tasks works!</p>
+<div class="container-fluid d-flex full-height">
+            <div class="row full-width">
+                <div class="col">
+                    <div class="row">
+                        <div class="col">
+                            <form [formGroup]="taskForm">
+                                <input 
+                                formControlName="name"
+                                type="text" 
+                                placeholder="Nueta tarea"
+                                (keyup.enter)="taskForm.valid && createTask(taskForm?.controls?.name?.value)"
+                                class="form-control shadow-none full-width">
+                            </form>
+                        </div>
+                        <div>
+                            <button 
+                                (click)="createTask(taskForm?.controls?.name?.value)"
+                                [disabled]="taskForm?.invalid"
+                                class="btn btn-dark full-width">
+                                crear
+                            </button>
+                        </div>
+                        <div class="col-12">
+                            <table class="table table-striped">
+                                <tbody>
+                                <tr *ngFor="let task of (tasks$ | async); index as i">
+                                    <td *ngIf="!task.editing">
+                                        {{task?.name}}
+                                    </td>
+                                    <td *ngIf="task.editing">
+                                        <input type="form-control" [(ngModel)]="task.name" (keyup.enter)="acceptChanges(task)">
+                                    </td>
+                                    <td *ngIf="!task.editing" class="actions">
+                                        <i class="fa fa-pencil" (click)="markTaskAsEditing(task)"></i>
+                                        <i class="fa fa-trash"  (click)="deleteTask(task)"></i>
+                                    </td>
+                                    <td *ngIf="task.editing" class="actions">
+                                        <i class="fa fa-check" (click)="acceptChanges(task)"></i>
+                                        <i class="fa fa-close"  (click)="cancelChanges(task)"></i>
+                                    </td>
+                                </tr>
+                                </tbody>
+                              </table>
+                        </div>
+                        <div class="col-12">
+                            <button class="btn btn-dark" (click)="clearAll()">
+                                BORRAR TODO
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                
+            </div>
+
+
+</div>

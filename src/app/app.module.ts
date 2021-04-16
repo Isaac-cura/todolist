@@ -7,6 +7,7 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { ToastContainerModule } from './components/toast-container/toast-container.module'
 import { AuthenticationGuard } from './guards/login/authentication.guard';
 import { HttpClientModule } from '@angular/common/http';
+import { DirectivesModule } from './directives/directives.module';
 
 @NgModule({
   declarations: [
@@ -17,7 +18,8 @@ import { HttpClientModule } from '@angular/common/http';
     AppRoutingModule,
     NgbModule,
     ToastContainerModule,
-    HttpClientModule
+    HttpClientModule,
+    DirectivesModule
   ],
   providers: [AuthenticationGuard],
   bootstrap: [AppComponent]

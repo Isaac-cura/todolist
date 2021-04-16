@@ -5,6 +5,8 @@ import { filter } from 'rxjs/operators';
 import { User } from 'src/app/models/user.model';
 import { AuthenticationService } from 'src/app/services/authentication/authentication.service';
 import { DasboardEnums } from '../../enums/dashboard.enum';
+import { TasksService } from '../../services/tasks/tasks.service';
+import { map } from 'rxjs/operators'
 
 @Component({
   selector: 'app-dashboard',
@@ -15,8 +17,13 @@ export class DashboardComponent implements OnInit {
   user$: Observable<User>;
   route: string;
   routerSubscription: Subscription;
+  taskQuantity$ = this.tasksService.taskSubject.pipe(map(tasks => {
+    return tasks?.length;
+  }));
+
   constructor(
     private authenticationService: AuthenticationService,
+    private tasksService: TasksService,
     private router: Router
   ) { 
   }
