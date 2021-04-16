@@ -11,8 +11,8 @@ export const sidebarLinks: SidebarLink[] = [{
     route: 'users',
     text: 'Usuarios'
 },{
-    icon: 'assets/task.png',
-    activeIcon: 'assets/active-task.png',
+    icon: 'assets/icons/task.svg',
+    activeIcon: 'assets/icons/active-task.svg',
     route: 'tasks',
     text: 'Tareas'
 }]

@@ -11,13 +11,6 @@
         <div class="row links flex-fill mb-2">
             <div class="col-12">
                 <ul>
-                    <li class="active text-center text-sm-left">
-                        <img src="assets/icons/home.svg">
-                        <img class="active" src="assets/icons/active-home.svg">
-                        <span class="d-none d-sm-inline">
-                            Inicio
-                        </span>
-                    </li>
                     <li *ngFor="let link of sidebarLinks" class="text-center text-sm-left">
                         <img [src]="link.icon">
                         <img class="active" [src]="link.activeIcon">
