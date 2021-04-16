@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { IntermediaryService } from 'src/app/services/intermediary/intermediary.service';
 import { AuthenticationService } from '../../services/authentication/authentication.service';
 
 @Component({
@@ -15,8 +16,7 @@ export class AuthorizationComponent implements OnInit {
   });
 
   constructor(
-    private formBuilder: FormBuilder,
-    private authenticationService: AuthenticationService
+    private formBuilder: FormBuilder
   ) { }
 
   ngOnInit(): void {
