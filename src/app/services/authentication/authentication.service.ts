@@ -6,15 +6,16 @@ import { LocalStorage } from '../../enums/localstorage.enums';
 import { UtilEnums } from '../../enums/util.enums';
 import { timer } from 'rxjs';
 import { IntermediaryService } from '../intermediary/intermediary.service';
-import { filter, first, takeUntil } from 'rxjs/operators';
+import { filter, first, map, takeUntil } from 'rxjs/operators';
 import { SubscriptionManagerService } from '../subscription-manager/subscription-manager.service';
+import { environment } from '../../../environments/environment';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthenticationService {
 
-  autehnticationSubject: Subject<AuthenticationModels.Session> = new ReplaySubject();
+  autehnticationSubject: Subject<AuthenticationModels.Session | User> = new ReplaySubject(1);
   private expirationSubscription: Subscription;
   
   constructor(
@@ -32,7 +33,10 @@ export class AuthenticationService {
   private launchFirstStateSession() {
     const session = this.getActiveSession();
     if(session) {
+      this.autehnticationSubject.next(session);
       this.setSession(session, true);
+    } else {
+      this.autehnticationSubject.next(null);
     }
   }
 
@@ -55,6 +59,7 @@ export class AuthenticationService {
     if(!user) {
       return throwError('Error al autenticar al usuario');
     }
+    this.autehnticationSubject.next(user);
     this.setSession(user);
     return of(user);
   }
@@ -72,8 +77,9 @@ export class AuthenticationService {
       ...obj,
       start: (preserveTime ? (obj as any).start : new Date().getTime())
     }
-    localStorage.setItem(LocalStorage.SESSION, JSON.stringify(session));
     this.startExpirationLimit(session);
+    localStorage.setItem(LocalStorage.SESSION, JSON.stringify(session));
+    return session;
   }
 
   private startExpirationLimit(session: AuthenticationModels.Session) {
@@ -85,6 +91,7 @@ export class AuthenticationService {
 
   private getExpirationTimer(session: AuthenticationModels.Session): Observable<number> {
     const timeToExpire = this.getTimeToExpire(session);
+    console.log(timeToExpire)
     if(!timeToExpire) {
       return throwError("Sessión caduca");
     }
@@ -95,8 +102,17 @@ export class AuthenticationService {
     )
   }
 
-  private getTimeToExpire(session: AuthenticationModels.Session): number {
-    const timeToExpire = UtilEnums.MillisecondTime.minute / 4;
+  private launchSignOutTimer(session:AuthenticationModels.Session) {
+    const timeToExpire = this.getTimeToExpire(session, "expire")
+    timer(timeToExpire).pipe(
+      takeUntil(this.onSessionEnd())
+    ).subscribe( _=>this.signOut());
+  }
+
+  private getTimeToExpire(session: AuthenticationModels.Session, type: 'ask' | 'expire' = "ask"): number {
+    const timeToExpire = type  == "expire" ? 
+                            environment.timeToExpireSession:
+                            environment.timeToAskSession;
     const expirationTimestamp = session.start + timeToExpire;
     const currentTimestamp = new Date().getTime();
     return expirationTimestamp > currentTimestamp ? 
@@ -105,7 +121,7 @@ export class AuthenticationService {
   } 
 
   private onSessionEnd() {
-    return this.autehnticationSubject.pipe(first(), filter(value => !value));
+    return this.autehnticationSubject.pipe(filter(value => !value), first());
   }
 
   private askToExtendSession(session) {
@@ -117,14 +133,10 @@ export class AuthenticationService {
       "Su sessión expirará en 1 minuto"
     )).subscribe(confirm => {
       this.setSession(session)
-    },  this.launchSignOutTimer.bind(this))
+    }, () =>  this.launchSignOutTimer(session))
   }
 
-  private launchSignOutTimer() {
-    timer(UtilEnums.MillisecondTime.minute / 4).pipe(
-      takeUntil(this.onSessionEnd())
-    ).subscribe( _=>this.signOut());
-  }
+
 
   private signOut() {
     this.clearSession();
