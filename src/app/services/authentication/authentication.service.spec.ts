@@ -42,8 +42,8 @@ describe('AuthenticationService', () => {
 
   it('autentication fail for not existing user', () => {
     service.registerUser(user);
-    service.login(user.email, user.password + "532523").subscribe(user => {
-      expect(user).toBeUndefined()
+    service.login(user.email, user.password + "532523").subscribe(()=>{},(error) => {
+      expect(error).toBe("Error al autenticar al usuario")
     }); 
   })
 
