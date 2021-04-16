@@ -29,6 +29,7 @@
                             <div>
                                 <input 
                                     type="password" 
+                                    (keyup.enter) ="registerForm.valid && registerUser(registerForm?.value)"
                                     formControlName="repeatedPassword"
                                     placeholder="Repetir Contraseña"
                                     class="form-control">

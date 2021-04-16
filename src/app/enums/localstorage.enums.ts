@@ -1,3 +1,4 @@
 export enum LocalStorage {
-    USERS = "users"
+    USERS = "users",
+    SESSION = "session"
 }
